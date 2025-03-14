@@ -133,7 +133,6 @@
     background-color: var(--card-front);
     padding: 10px;
     border-radius: 10px;
-    visibility: hidden  ;
   }
   
   .result img {
@@ -146,8 +145,7 @@
     padding: 15px;
   }
   
-  result-container {
-    display: none!important;
+  .result {
     padding: 10px;
     margin: 20px;
   }
@@ -215,3 +213,13 @@
     }
   }
   
+
+  .downloadBtn{
+    margin: 5px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--text-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }

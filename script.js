@@ -189,15 +189,13 @@ function stopTimer() {
 function showResult() {
   const time = timerDisplay.textContent;
   const timestamp = new Date().toLocaleString();
-
   resultDisplay.innerHTML = `
   <div id="result-container" class="result">
       <br>
     <label for="username">Enter your name:</label>
     <input type="text" id="username" placeholder="Your Name">
-    <button onclick="saveResult()">Submit</button>
+    <button class="downloadBtn" onclick="saveResult()">Submit</button>
     <hr>
-
   </div>
 `;
 }
