@@ -8,7 +8,7 @@ body {
     height: 100vh;
     margin: 0;
     color: rgb(206, 26, 26);
-    padding: 5px;
+    padding: 30px;
 
   }
   .controls {
@@ -101,7 +101,7 @@ body {
     margin-right: 10px;
   }
   
-  .controls select, .controls button {
+  .controls select, .controls button, .downloadBtn {
     padding: 5px 10px;
     font-size: 1em;
   }
@@ -114,5 +114,14 @@ body {
   .result {
     margin-top: 20px;
     font-size: 1.2em;
-    background-color: aliceblue;
+    background-color: #fff;
+  }
+
+  .proof{
+    padding: 20px;
+  }
+
+  result-container{
+    padding: 10px;
+    margin: 20px;
   }

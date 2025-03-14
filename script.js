@@ -190,9 +190,12 @@ function showResult() {
 
   resultDisplay.innerHTML = `
   <div id="result-container" class="result">
+      <br>
     <label for="username">Enter your name:</label>
     <input type="text" id="username" placeholder="Your Name">
     <button onclick="saveResult()">Submit</button>
+    <hr>
+
   </div>
 `;
 }
@@ -211,14 +214,16 @@ function saveResult() {
   // Update result display with user's name and game completion info
   resultDisplay.innerHTML = `
       <div id="result-container" class="result">
-        <p>Congratulations, ${userName}! You completed the game in ${time}.</p>
         <img src="trophy.png" alt="Trophy">
+        <p>Congratulations, ${userName}! <br> You completed the game in ${time} on ${difficultySelect.value} Difficulty.</p>
         <p>Timestamp: ${timestamp}</p>
+            <br>
+
       </div>
     `;
 
   // Add the download button
-  download.innerHTML = `<button onclick="downloadResult()">Save as PNG</button>`;
+  download.innerHTML = `<button class="downloadBtn" onclick="downloadResult()">Save as PNG</button>`;
 }
 
 function downloadResult() {
