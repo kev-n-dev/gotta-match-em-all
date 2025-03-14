@@ -19,6 +19,7 @@ function getRareTrue(probability = 0.2) {
 
 // Initialize the game
 async function initGame() {
+  resetBoard();
   const difficulty = difficultySelect.value;
   const numberOfPokemon = getNumberOfPokemon(difficulty);
   const pokemonIds = generateRandomPokemonIds(numberOfPokemon);
@@ -40,7 +41,7 @@ function getNumberOfPokemon(difficulty) {
     case "hard":
       return 33;
     default:
-      return 4;
+      return 6;
   }
 }
 
@@ -100,6 +101,10 @@ function flipCard() {
 
   this.classList.add("flipped");
 
+  // Show the front and hide the back
+  this.querySelector(".front").style.display = "block";
+  this.querySelector(".back").style.display = "none";
+
   if (!firstCard) {
     firstCard = this;
     return;
@@ -109,6 +114,18 @@ function flipCard() {
   lockBoard = true;
 
   checkForMatch();
+}
+
+function resetBoard() {
+  [firstCard, secondCard].forEach((card) => {
+    if (card) {
+      card.classList.remove("flipped");
+      card.querySelector(".front").style.display = "none";
+      card.querySelector(".back").style.display = "block";
+    }
+  });
+
+  [firstCard, secondCard, lockBoard] = [null, null, false];
 }
 
 // Check if the two flipped cards match
@@ -133,7 +150,6 @@ function checkForMatch() {
       stopTimer();
       showResult();
     }
-    resetBoard();
   } else {
     setTimeout(() => {
       firstCard.classList.remove("flipped");
@@ -141,11 +157,6 @@ function checkForMatch() {
       resetBoard();
     }, 1000);
   }
-}
-
-// Reset the board
-function resetBoard() {
-  [firstCard, secondCard, lockBoard] = [null, null, false];
 }
 
 // Shuffle the array
@@ -211,41 +222,39 @@ function saveResult() {
 }
 
 function downloadResult() {
-  // Add the "flipped" class to all cards
-  const allCards = document.querySelectorAll(".card");
-  allCards.forEach((card) => card.classList.add("flipped"));
-
   const proofContainer = document.getElementById("proof");
 
-  const images = proofContainer.querySelectorAll("img");
-  const imagePromises = Array.from(images).map(
-    (img) =>
-      new Promise((resolve, reject) => {
-        if (img.complete && img.naturalWidth !== 0) {
-          resolve();
-        } else {
-          img.onload = resolve;
-          img.onerror = reject; // Handle broken images
-        }
-      })
-  );
+  // Wait for the DOM to update
+  setTimeout(() => {
+    // Wait for all images to load
+    const images = proofContainer.querySelectorAll("img");
+    const imagePromises = Array.from(images).map(
+      (img) =>
+        new Promise((resolve, reject) => {
+          if (img.complete && img.naturalWidth !== 0) {
+            resolve();
+          } else {
+            img.onload = resolve;
+            img.onerror = reject; // Handle broken images
+          }
+        })
+    );
 
-  Promise.all(imagePromises)
-    .then(() => {
-      // Capture the screenshot after all images are loaded
-      html2canvas(proofContainer, { allowTaint: true, useCORS: true }).then(
-        (canvas) => {
+    Promise.all(imagePromises)
+      .then(() => {
+        // Capture the screenshot after all images are loaded
+        html2canvas(proofContainer, { useCORS: true }).then((canvas) => {
           const link = document.createElement("a");
           link.href = canvas.toDataURL("image/png");
           link.download = "proof.png"; // Name of the downloaded file
           link.click();
-        }
-      );
-    })
-    .catch((error) => {
-      console.error("Error loading images:", error);
-      alert("Failed to load images. Please try again.");
-    });
+        });
+      })
+      .catch((error) => {
+        console.error("Error loading images:", error);
+        alert("Failed to load images. Please try again.");
+      });
+  }, 100); // 100ms delay to allow DOM updates
 }
 
 // Start the game when the button is clicked
