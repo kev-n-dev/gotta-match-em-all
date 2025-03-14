@@ -35,11 +35,11 @@ async function initGame() {
 function getNumberOfPokemon(difficulty) {
   switch (difficulty) {
     case "easy":
-      return 9;
+      return 10;
     case "medium":
-      return 18;
+      return 15;
     case "hard":
-      return 33;
+      return 30;
     default:
       return 6;
   }
@@ -49,7 +49,7 @@ function getNumberOfPokemon(difficulty) {
 function generateRandomPokemonIds(number) {
   const ids = [];
   while (ids.length < number) {
-    const randomId = Math.floor(Math.random() * 151) + 1; // Gen 1 Pokemon (1-151)
+    const randomId = Math.floor(Math.random() * 1025) + 1; // Gen 1 Pokemon (1-151)
     if (!ids.includes(randomId)) ids.push(randomId);
   }
   return ids;

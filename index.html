@@ -12,19 +12,20 @@
   </head>
   <body>
     <div class="game-container">
-      <div class="timer">Time: <span id="time">00:00</span></div>
+      <div class="timer"><span id="time">00:00</span></div>
       <audio id="matchSound" src="assets/match.mp3"></audio>
 
-      <h1>Gotta Match'em All!</h1>
+      <h1 class="title">Gotta Match'em All!</h1>
       <div class="controls">
-        <label for="difficulty">Difficulty:</label>
+        <label for="difficulty"></label>
         <select id="difficulty">
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
-        <button id="start">Start Game</button>
+        <button id="start">Start!</button>
       </div>
+
       <div class="proof" id="proof">
         <div class="grid" id="grid"></div>
         <div class="result" id="result"></div>

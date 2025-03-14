@@ -1,47 +1,82 @@
-/* styles.css */
-body {
+/* Dark/Light Mode Setup */
+:root {
+    --bg-color: #ffffff;
+    --text-color: rgb(206, 26, 26);
+    --card-back: #333;
+    --card-front: #fff;
+    --timer-color: rgb(77, 4, 4);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #1e1e1e;
+      --text-color: #ff6b6b;
+      --card-back: #444;
+      --card-front: #222;
+      --timer-color: #ff4d4d;
+    }
+  }
+  
+  body {
     font-family: Arial, sans-serif;
-    background-color: #bebebe;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    color: rgb(206, 26, 26);
-    padding: 30px;
-
-  }
-  .controls {
-  margin-bottom: 20px;
-}
-
-.controls label {
-  margin-right: 10px;
-}
-
-.controls select, .controls button {
-  padding: 5px 10px;
-  font-size: 1em;
-}
-
-.controls #shiny {
-  margin-left: 20px;
-}
-  .game-container {
+    padding: 20px;
     text-align: center;
   }
   
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(6, 100px); /* Adjust based on difficulty */
-    gap: 10px;
-    margin: 20px auto;
-    justify-content: center; /* Center the grid */
+  .game-container {
+    width: 100%;
+    max-width: 500px;
   }
   
+  /* Controls */
+  .controls {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .controls label {
+    font-size: 1rem;
+  }
+  
+  .controls select,
+  .controls button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--text-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .controls button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    margin: 20px auto;
+    justify-content: center;
+    max-width: 400px;
+  }
+  
+  /* Card */
   .card {
-    width: 100px;
-    height: 100px;
+    width: min(100px, 20vw);
+    height: min(100px, 20vw);
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.5s;
@@ -62,66 +97,121 @@ body {
   }
   
   .card .front {
-    background-color: #fff;
+    background-color: var(--card-front);
     display: flex;
     justify-content: center;
     align-items: center;
     transform: rotateY(180deg);
   }
   
-  .card .back {
-    background-color: #333;
+  .card .front img {
+    max-width: 100%; /* Ensures the image never exceeds container width */
+    max-height: 100%; /* Ensures the image never exceeds container height */
+    width: auto; /* Maintains aspect ratio */
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Removes bottom whitespace */
+    object-fit: contain; /* Ensures the entire image fits within the container */
   }
-  
-  .timer {
-    font-size: 3em;
-    margin-bottom: 20px;
-    color: rgb(77, 4, 4);
+  .card .back {
+    background: url("assets/pokeball.png") center/contain no-repeat;
+    background-color: var(--card-back, #fff); /* Fallback color */
+      background-size: 50%; /* Adjust percentage or use px */
 
   }
   
+  /* Timer */
+  .timer {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: var(--timer-color);
+  }
+  
+  /* Result */
   .result {
     margin-top: 20px;
     font-size: 1.2em;
+    background-color: var(--card-front);
+    padding: 10px;
     border-radius: 10px;
-    justify-content: center;
-    align-items: center;
+    visibility: hidden  ;
   }
   
   .result img {
     width: 50px;
     height: 50px;
   }
-
-  .controls {
-    margin-bottom: 20px;
+  
+  /* Proof Section */
+  .proof {
+    padding: 15px;
   }
   
-  .controls label {
-    margin-right: 10px;
-  }
-  
-  .controls select, .controls button, .downloadBtn {
-    padding: 5px 10px;
-    font-size: 1em;
-  }
-  
-  .controls #shiny {
-    margin-left: 20px;
-  }
-
-
-  .result {
-    margin-top: 20px;
-    font-size: 1.2em;
-    background-color: #fff;
-  }
-
-  .proof{
-    padding: 20px;
-  }
-
-  result-container{
+  result-container {
+    display: none!important;
     padding: 10px;
     margin: 20px;
   }
+  
+  /* ========================= */
+  /* MEDIA QUERIES FOR SIZES  */
+  /* ========================= */
+  
+  /* Small screens (phones) */
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+    }
+    .game-container {
+        height: 100vh;
+        }
+    .title{
+        font-size: 0.8em;
+    }
+    .card {
+      width: min(80px, 18vw);
+      height: min(80px, 18vw);
+    }
+  
+    .timer {
+        top: 0px;
+        position: relative;
+      font-size: 2em;
+    }
+  
+    .controls {
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+  
+    .controls select,
+    .controls button {
+        font-size: small!important;
+      width: 30%;
+    }
+  }
+  
+  /* Medium screens (tablets) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    }
+  
+    .card {
+      width: min(100px, 18vw);
+      height: min(100px, 18vw);
+    }
+  }
+  
+  /* Large screens (desktops) */
+  @media (min-width: 769px) {
+    .grid {
+      grid-template-columns: repeat(6, minmax(100px, 1fr));
+    }
+  
+    .card {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  
