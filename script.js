@@ -214,7 +214,7 @@ function saveResult() {
   // Update result display with user's name and game completion info
   resultDisplay.innerHTML = `
       <div id="result-container" class="result">
-        <img src="trophy.png" alt="Trophy">
+        <img src="assets/trophy.png" alt="Trophy">
         <p>Congratulations, ${userName}! <br> You completed the game in ${time} on ${difficultySelect.value} Difficulty.</p>
         <p>Timestamp: ${timestamp}</p>
             <br>
