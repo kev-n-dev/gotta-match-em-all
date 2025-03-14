@@ -128,7 +128,6 @@ function resetBoard() {
   [firstCard, secondCard, lockBoard] = [null, null, false];
 }
 
-// Check if the two flipped cards match
 function checkForMatch() {
   const isMatch =
     firstCard.querySelector(".front img").src ===
@@ -146,6 +145,9 @@ function checkForMatch() {
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
 
+    // Reset the board state without flipping the cards back
+    [firstCard, secondCard, lockBoard] = [null, null, false];
+
     if (matches === cards.length / 2) {
       stopTimer();
       showResult();
@@ -154,7 +156,7 @@ function checkForMatch() {
     setTimeout(() => {
       firstCard.classList.remove("flipped");
       secondCard.classList.remove("flipped");
-      resetBoard();
+      resetBoard(); // Reset the board after a mismatch
     }, 1000);
   }
 }
